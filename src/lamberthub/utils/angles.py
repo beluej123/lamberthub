@@ -1,38 +1,41 @@
-""" Utilities related to angles computations """
+"""Utilities related to angles computations"""
 
+from numba import njit as jit
 import numpy as np
-from numpy import cross, dot
-from numpy.linalg import norm
+
+from lamberthub.linalg import cross, dot, norm
 
 
+@jit
 def get_transfer_angle(r1, r2, prograde):
-    """
-    Solves for the transfer angle being known the sense of rotation.
+    """Compute the transfer angle of the trajectory.
+
+    Initial and final position vectors are required together with the direction
+    of motion.
 
     Parameters
     ----------
-    r1: np.array
+    r1 : ~np.array
         Initial position vector.
-    r2: np.array
+    r2 : ~np.array
         Final position vector.
-    prograde: bool
-        If True, it assumes prograde motion, otherwise assumes retrograde.
+    prograde : bool
+        ``True`` for prograde motion, ``False`` otherwise.
 
     Returns
     -------
-    dtheta: float
+    dtheta : float
         Transfer angle in radians.
 
     """
-
     # Check if both position vectors are collinear. If so, check if the transfer
     # angle is 0 or pi.
-    if np.all(np.cross(r1, r2) == 0):
+    if np.all(cross(r1, r2) == 0):
         return 0 if np.all(np.sign(r1) == np.sign(r2)) else np.pi
 
     # Solve for a unitary vector normal to the vector plane. Its direction and
     # sense the one given by the cross product (right-hand) from r1 to r2.
-    h = cross(r1, r2) / norm(np.cross(r1, r2))
+    h = cross(r1, r2) / norm(cross(r1, r2))
 
     # Compute the projection of the normal vector onto the reference plane.
     alpha = dot(np.array([0, 0, 1]), h)
@@ -50,6 +53,7 @@ def get_transfer_angle(r1, r2, prograde):
     return dtheta
 
 
+@jit
 def get_orbit_normal_vector(r1, r2, prograde):
     """
     Computes a unitary normal vector aligned with the specific angular momentum
@@ -70,9 +74,8 @@ def get_orbit_normal_vector(r1, r2, prograde):
         Unitary vector aligned with orbit specific angular momentum.
 
     """
-
     # Compute the normal vector and its projection onto the vertical axis
-    i_h = np.cross(r1, r2) / norm(np.cross(r1, r2))
+    i_h = cross(r1, r2) / norm(cross(r1, r2))
 
     # Solve the projection onto the positive vertical direction of the
     # fundamental plane.
@@ -88,6 +91,7 @@ def get_orbit_normal_vector(r1, r2, prograde):
     return i_h
 
 
+@jit
 def get_orbit_inc_and_raan_from_position_vectors(r1, r2, prograde):
     """
     Computes the inclination of the orbit being known an initial and a final
@@ -110,7 +114,6 @@ def get_orbit_inc_and_raan_from_position_vectors(r1, r2, prograde):
         Right ascension of the ascending node.
 
     """
-
     # Get a unitary vector aligned in direction and sense with the specific
     # angular momentum one.
     i_h = get_orbit_normal_vector(r1, r2, prograde)
@@ -136,6 +139,7 @@ def get_orbit_inc_and_raan_from_position_vectors(r1, r2, prograde):
     return inc, raan
 
 
+@jit
 def nu_to_E(nu, ecc):
     """
     Retrieves eccentric anomaly from true one.
@@ -153,11 +157,11 @@ def nu_to_E(nu, ecc):
         Eccentric anomaly.
 
     """
-
     E = 2 * np.arctan(np.sqrt((1 - ecc) / (1 + ecc)) * np.tan(nu / 2))
     return E
 
 
+@jit
 def E_to_nu(E, ecc):
     """
     Retrieves true anomaly from eccentric one.
@@ -175,11 +179,11 @@ def E_to_nu(E, ecc):
         True anomaly.
 
     """
-
     nu = 2 * np.arctan(np.sqrt((1 + ecc) / (1 - ecc)) * np.tan(E / 2))
     return nu
 
 
+@jit
 def nu_to_B(nu):
     """
     Retrieves parabolic anomaly from true one.
@@ -204,6 +208,7 @@ def nu_to_B(nu):
     return B
 
 
+@jit
 def B_to_nu(B):
     """
     Retrieves the true anomaly from parabolic one.
@@ -228,6 +233,7 @@ def B_to_nu(B):
     return nu
 
 
+@jit
 def nu_to_H(nu, ecc):
     """
     Retrieves hyperbolic anomaly from true one.
@@ -249,6 +255,7 @@ def nu_to_H(nu, ecc):
     return H
 
 
+@jit
 def H_to_nu(H, ecc):
     """
     Retrieves hyperbolic anomaly from true one.

@@ -11,7 +11,6 @@ Holds routines for converting between different orbital elements sets.
 
 References
 ----------
-
 [1] poliastro: https://github.com/poliastro/poliastro/
 
 """
@@ -24,7 +23,7 @@ from lamberthub.utils.angles import E_to_nu, H_to_nu
 
 
 def rv_pqw(k, p, ecc, nu):
-    r"""Returns r and v vectors in perifocal frame.
+    r"""Return r and v vectors in perifocal frame.
 
     Parameters
     ----------
@@ -39,7 +38,6 @@ def rv_pqw(k, p, ecc, nu):
 
     Returns
     -------
-
     r: ndarray
         Position. Dimension 3 vector
     v: ndarray
@@ -65,14 +63,14 @@ def rv_pqw(k, p, ecc, nu):
         \end{bmatrix}
 
     """
-    pqw = np.array(
-        [[cos(nu), sin(nu), 0], [-sin(nu), ecc + cos(nu), 0]]
-    ) * np.array([[p / (1 + ecc * cos(nu))], [sqrt(k / p)]])
+    pqw = np.array([[cos(nu), sin(nu), 0], [-sin(nu), ecc + cos(nu), 0]]) * np.array(
+        [[p / (1 + ecc * cos(nu))], [sqrt(k / p)]]
+    )
     return pqw
 
 
 def coe_rotation_matrix(inc, raan, argp):
-    """Create a rotation matrix for coe transformation"""
+    """Create a rotation matrix for coe transformation."""
     r = rotation_matrix(raan, 2)
     r = r @ rotation_matrix(inc, 0)
     r = r @ rotation_matrix(argp, 2)
@@ -80,7 +78,7 @@ def coe_rotation_matrix(inc, raan, argp):
 
 
 def coe2rv(k, p, ecc, inc, raan, argp, nu):
-    r"""Converts from classical orbital to state vectors.
+    r"""Convert from classical orbital to state vectors.
 
     Classical orbital elements are converted into position and velocity
     vectors by `rv_pqw` algorithm. A rotation matrix is applied to position
@@ -143,7 +141,7 @@ def coe2rv(k, p, ecc, inc, raan, argp, nu):
 
 
 def rv2coe(k, r, v, tol=1e-8):
-    r"""Converts from vectors to classical orbital elements.
+    r"""Convert from vectors to classical orbital elements.
 
     Parameters
     ----------
@@ -225,7 +223,6 @@ def rv2coe(k, r, v, tol=1e-8):
         \right.
 
     """
-
     h = cross(r, v)
     n = cross([0, 0, 1], h)
     e = ((v.dot(v) - k / (norm(r))) * r - r.dot(v) * v) / k
@@ -272,6 +269,16 @@ def rv2coe(k, r, v, tol=1e-8):
 
 
 def rotation_matrix(angle, axis):
+    """Return a rotation matrix for a certain angle around an axis.
+
+    Parameters
+    ----------
+    angle: float
+        Angle of rotation.
+    axis: int
+        Rotation relating 0, 1, and 2 with x, y, and z respectively.
+
+    """
     c = cos(angle)
     s = sin(angle)
     if axis == 0:

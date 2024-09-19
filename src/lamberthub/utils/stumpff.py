@@ -1,13 +1,16 @@
-"""
-This module holds the so-called Stumpff functions. These set of functions
-usually appear in a plethora of equations within the subject of astrodynamics.
+"""Module containing the implementation of Stumpff functions.
+
+These set of functions usually appear in a plethora of equations within the
+subject of astrodynamics.
 """
 
 from math import gamma
 
+from numba import njit as jit
 import numpy as np
 
 
+@jit
 def c2(psi):
     r"""Second Stumpff function.
 
@@ -35,6 +38,7 @@ def c2(psi):
     return res
 
 
+@jit
 def c3(psi):
     r"""Third Stumpff function.
 
