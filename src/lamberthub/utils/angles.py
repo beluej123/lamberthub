@@ -32,7 +32,7 @@ def get_transfer_angle(r1, r2, prograde):
 
     # Solve for a unitary vector normal to the vector plane. Its direction and
     # sense the one given by the cross product (right-hand) from r1 to r2.
-    h = cross(r1, r2) / norm(np.cross(r1, r2))
+    h = np.cross(r1, r2) / norm(np.cross(r1, r2))
 
     # Compute the projection of the normal vector onto the reference plane.
     alpha = dot(np.array([0, 0, 1]), h)

@@ -1,4 +1,4 @@
-"""This module holds all methods devised by David A. Vallado."""
+"""This module holds methods devised by David A. Vallado."""
 
 import time
 

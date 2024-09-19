@@ -1,4 +1,4 @@
-""" A module hosting all algorithms devised by Izzo """
+""" A module hosting algorithms devised by Izzo """
 
 import time
 
@@ -76,7 +76,7 @@ def izzo2015(
 
     References
     ----------
-    [1] Izzo, D. (2015). Revisiting Lambert’s problem. Celestial Mechanics
+    [1] Izzo, D. (2015). Revisiting Lambert's problem. Celestial Mechanics
            and Dynamical Astronomy, 121(1), 1-15.
 
     [2] Lancaster, E. R., & Blanchard, R. C. (1969). A unified form of
@@ -322,13 +322,13 @@ def _halley(p0, T0, ll, atol, rtol, maxiter):
 
 
 def _householder(p0, T0, ll, M, atol, rtol, maxiter):
-    """Find a zero of time of flight equation using the Householder method.
+    """
+    Find a zero of time of flight equation using the Householder method.
 
     Note
     ----
     This function is private because it assumes a calling convention specific to
     this module and is not really reusable.
-
     """
 
     # The clock starts together with the iteration

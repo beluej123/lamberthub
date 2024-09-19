@@ -1,7 +1,7 @@
 """
-Holds routines for converting between different orbital elements sets.
+Routines converting between different orbital elements sets.
 
-.. note::
+Notes:
     Some of these functions were directly taken from the poliastro[1] library,
     see the references section for more information about this powerful
     software.
@@ -9,7 +9,7 @@ Holds routines for converting between different orbital elements sets.
     Copyright (c) 2012-2021 Juan Luis Cano Rodríguez and the poliastro
     development team.
 
-References
+References:
 ----------
 
 [1] poliastro: https://github.com/poliastro/poliastro/
