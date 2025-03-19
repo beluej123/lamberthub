@@ -23,9 +23,10 @@ from lamberthub.utils.angles import E_to_nu, H_to_nu
 
 
 def rv_pqw(k, p, ecc, nu):
-    r"""Return r and v vectors in perifocal frame.
+    """
+    Return r and v vectors in perifocal frame.
 
-    Parameters
+    Input Parameters:
     ----------
     k : float
         Standard gravitational parameter (km^3 / s^2).

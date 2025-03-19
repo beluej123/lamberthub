@@ -1,4 +1,6 @@
-"""A module hosting all algorithms devised by Izzo"""
+"""
+Algorithms devised by Izzo
+"""
 
 import numpy as np
 from numba import njit as jit

@@ -1,4 +1,6 @@
-"""This module holds methods devised by David A. Vallado."""
+"""
+Methods devised by David A. Vallado.
+"""
 
 import time
 

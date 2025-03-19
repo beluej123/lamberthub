@@ -1,4 +1,6 @@
-"""A module hosting all algorithms devised by Arora"""
+"""
+Algorithms devised by Arora
+"""
 
 import time
 
